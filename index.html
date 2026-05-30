@@ -2,40 +2,45 @@
 <html>
 <head>
     <style>
-        body { background: black; color: #00ff00; font-family: 'Courier New', monospace; padding: 20px; font-size: 16px; overflow: hidden; }
-        #console { white-space: pre-wrap; line-height: 1.2; }
+        body { background: #000; color: #00ff00; font-family: 'Courier New', monospace; padding: 15px; font-size: 14px; overflow: hidden; line-height: 1.1; }
+        #console { white-space: pre; }
     </style>
 </head>
 <body>
     <div id="console"></div>
     <script>
         const consoleDiv = document.getElementById('console');
-        let logs = [
-            "[ 1 phoenixminer ]  8 syslog  9 autofan  0 agent  h help",
-            "Eth: Connected to ethash pool eu-etc.hiveon.net:8888",
-            "Eth: Mining ETC on >eu-etc.hiveon.net:8888 for 0:00",
-            "Eth: Ganho atual: 150.50 USD | Potência: 120 W",
-            "GPU1: 45C 70% 120W"
+        let lines = [
+            "Phoenix Miner 5.5c Linux/gcc - Release build",
+            "--------------------------------------------",
+            "Available GPUs for mining:",
+            "GPU1: Radeon RX 5500 XT, 8 GB VRAM",
+            "GPU2: Radeon RX 5500 XT, 8 GB VRAM",
+            "GPU3: Unknown AMD GPU, 12 GB VRAM",
+            "GPU4: Radeon RX 5500 XT, 8 GB VRAM",
+            "Eth: Connecting to ethash pool us1.ethermine.org:4444 (proto: EthProxy)",
+            "Eth: Connected to ethash pool us1.ethermine.org:4444 (172.65.218.238)",
+            "Eth: New job #784fbc7f from us1.ethermine.org:4444; diff: 4000MH"
         ];
 
-        function addLog() {
-            const poolLogs = [
-                "Eth: Connection closed by the pool",
-                "Eth: Reconnecting in 5 seconds...",
-                "Eth: Connecting to ethash pool eu-etc.hiveon.net:8888",
-                "Eth: Connected to ethash pool eu-etc.hiveon.net:8888"
+        function refresh() {
+            // Simula atividade constante
+            const status = [
+                "Eth: Connected to ethash pool eu-etc.hiveon.net:8888",
+                "GPU1: 24C 70% 27W, GPU2: 32C 70% 41W, GPU3: 34C 70% 37W",
+                "GPUs power: 105.4 W",
+                "Eth: Accepted shares 0 (0 stales), rejected shares 0 (0 stales)"
             ];
             
-            logs.push(poolLogs[Math.floor(Math.random() * poolLogs.length)]);
-            if (logs.length > 20) logs.shift(); // Remove linhas antigas para não travar
+            lines.push(status[Math.floor(Math.random() * status.length)]);
+            if (lines.length > 25) lines.shift(); 
             
-            consoleDiv.innerText = logs.join('\n');
+            consoleDiv.innerText = lines.join('\n');
             window.scrollTo(0, document.body.scrollHeight);
         }
 
-        setInterval(addLog, 2000); // Adiciona uma nova linha a cada 2 segundos
-        addLog();
+        setInterval(refresh, 1500);
+        refresh();
     </script>
 </body>
 </html>
-

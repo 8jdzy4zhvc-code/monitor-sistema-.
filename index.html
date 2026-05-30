@@ -2,37 +2,57 @@
 <html>
 <head>
     <style>
-        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 15px; font-size: 14px; overflow: hidden; line-height: 1.2; }
-        #console { white-space: pre; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 15px; font-size: 14px; line-height: 1.2; overflow: hidden; }
+        .header { color: #fff; border-bottom: 1px solid #333; margin-bottom: 10px; padding-bottom: 5px; }
         .green { color: #00ff00; }
         .red { color: #ff0000; }
         .yellow { color: #ffff00; }
         .purple { color: #ff00ff; }
+        #log-container { height: 80vh; overflow-y: auto; }
     </style>
 </head>
 <body>
-    <div id="console"></div>
+    <div class="header">
+        [ PHOENIX MINER 5.5c ] - STATUS DO SISTEMA - [ ATIVO ]<br>
+        ---------------------------------------------------------
+    </div>
+    <div id="log-container">
+        <div id="logs"></div>
+    </div>
+
     <script>
-        const consoleDiv = document.getElementById('console');
+        const logDiv = document.getElementById('logs');
         let lines = [];
+        let ultimaDataDeposito = null;
 
         function update() {
-            const valorCarteira = Math.floor(Math.random() * (40 - 30 + 1) + 30);
-            const status = [
-                `<span class="green">Eth: Mining BTC/ETC successful - Share accepted</span>`,
-                `<span class="red">Error: GPU driver timeout on GPU3 - Retrying...</span>`,
-                `<span class="yellow">GPU: Samsung Evo RX580 OC | Temp: 55C | Fan: 70%</span>`,
-                `<span class="purple">New deposit received: ${valorCarteira}.00 USD to wallet</span>`
+            const agora = new Date();
+            const dataAtual = agora.toLocaleDateString();
+            
+            // Lógica: Linha roxa apenas uma vez por dia
+            let linhaRoxa = "";
+            if (ultimaDataDeposito !== dataAtual) {
+                const valor = Math.floor(Math.random() * (40 - 30 + 1) + 30);
+                linhaRoxa = `<div class="purple">[${agora.toLocaleTimeString()}] New deposit: ${valor}.00 USD to wallet</div>`;
+                ultimaDataDeposito = dataAtual;
+            }
+
+            const tipos = [
+                `<div class="green">[${agora.toLocaleTimeString()}] Eth: Mining BTC successful - Share accepted</div>`,
+                `<div class="yellow">[${agora.toLocaleTimeString()}] GPU: Samsung Evo RX580 OC | Temp: 55C | Fan: 70%</div>`,
+                `<div class="red">[${agora.toLocaleTimeString()}] Error: GPU driver timeout on GPU3 - Retrying...</div>`
             ];
             
-            lines.push(status[Math.floor(Math.random() * status.length)]);
-            if (lines.length > 22) lines.shift();
+            // Escolhe uma linha aleatória e adiciona
+            const novaLinha = tipos[Math.floor(Math.random() * tipos.length)];
+            lines.push(novaLinha);
+            if (linhaRoxa) lines.push(linhaRoxa);
             
-            consoleDiv.innerHTML = lines.join('\n');
-            window.scrollTo(0, document.body.scrollHeight);
+            if (lines.length > 15) lines.shift();
+            logDiv.innerHTML = lines.join('');
         }
 
-        setInterval(update, 2000);
+        setInterval(update, 3000);
         update();
     </script>
 </body>

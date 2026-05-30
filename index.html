@@ -2,13 +2,15 @@
 <html>
 <head>
     <style>
-        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 15px; font-size: 14px; line-height: 1.2; overflow: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #000; color: #fff; font-family: 'Courier New', monospace; padding: 10px; font-size: 14px; min-height: 100vh; overflow-y: auto; }
         .header { color: #fff; border-bottom: 1px solid #333; margin-bottom: 10px; padding-bottom: 5px; }
         .green { color: #00ff00; }
         .red { color: #ff0000; }
         .yellow { color: #ffff00; }
         .purple { color: #ff00ff; }
-        #log-container { height: 80vh; overflow-y: auto; }
+        #logs { display: flex; flex-direction: column; width: 100%; }
+        div[class] { margin-bottom: 2px; }
     </style>
 </head>
 <body>
@@ -16,9 +18,7 @@
         [ PHOENIX MINER 5.5c ] - STATUS DO SISTEMA - [ ATIVO ]<br>
         ---------------------------------------------------------
     </div>
-    <div id="log-container">
-        <div id="logs"></div>
-    </div>
+    <div id="logs"></div>
 
     <script>
         const logDiv = document.getElementById('logs');
@@ -48,8 +48,12 @@
             lines.push(novaLinha);
             if (linhaRoxa) lines.push(linhaRoxa);
             
-            if (lines.length > 15) lines.shift();
+            // Mantém até 50 linhas para permitir bastante rolagem
+            if (lines.length > 50) lines.shift();
             logDiv.innerHTML = lines.join('');
+            
+            // Rola automaticamente para o final
+            window.scrollTo(0, document.body.scrollHeight);
         }
 
         setInterval(update, 3000);

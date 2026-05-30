@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black; color:#00ff00; font-family: 'Courier New', monospace; padding:20px; font-size:18px;">
+    <pre id="display"></pre>
+    <script>
+        // Você pode editar esses valores direto aqui no GitHub quando quiser
+        const ganho = "150.50"; 
+        const potencia = "120";
+        const temp = "45";
+
+        document.getElementById('display').innerText = 
+            "[ 1 phoenixminer ]  8 syslog  9 autofan  0 agent  h help\n" +
+            "Eth: Connected to ethash pool eu-etc.hiveon.net:8888\n" +
+            "Eth: Mining ETC on >eu-etc.hiveon.net:8888 for 0:00\n\n" +
+            "Eth: Ganho atual: " + ganho + " USD | Potência: " + potencia + " W\n" +
+            "GPU1: " + temp + "C 70% " + potencia + "W\n\n" +
+            "Eth: Connection closed by the pool\n" +
+            "Eth: Reconnecting in 5 seconds...";
+    </script>
+</body>
+</html>

@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
-<body style="background:black; color:#00ff00; font-family: 'Courier New', monospace; padding:20px; font-size:18px;">
-    <pre id="display"></pre>
+<head>
+    <style>
+        body { background: black; color: #00ff00; font-family: 'Courier New', monospace; padding: 20px; font-size: 16px; overflow: hidden; }
+        #console { white-space: pre-wrap; line-height: 1.2; }
+    </style>
+</head>
+<body>
+    <div id="console"></div>
     <script>
-        // Você pode editar esses valores direto aqui no GitHub quando quiser
-        const ganho = "150.50"; 
-        const potencia = "120";
-        const temp = "45";
+        const consoleDiv = document.getElementById('console');
+        let logs = [
+            "[ 1 phoenixminer ]  8 syslog  9 autofan  0 agent  h help",
+            "Eth: Connected to ethash pool eu-etc.hiveon.net:8888",
+            "Eth: Mining ETC on >eu-etc.hiveon.net:8888 for 0:00",
+            "Eth: Ganho atual: 150.50 USD | Potência: 120 W",
+            "GPU1: 45C 70% 120W"
+        ];
 
-        document.getElementById('display').innerText = 
-            "[ 1 phoenixminer ]  8 syslog  9 autofan  0 agent  h help\n" +
-            "Eth: Connected to ethash pool eu-etc.hiveon.net:8888\n" +
-            "Eth: Mining ETC on >eu-etc.hiveon.net:8888 for 0:00\n\n" +
-            "Eth: Ganho atual: " + ganho + " USD | Potência: " + potencia + " W\n" +
-            "GPU1: " + temp + "C 70% " + potencia + "W\n\n" +
-            "Eth: Connection closed by the pool\n" +
-            "Eth: Reconnecting in 5 seconds...";
+        function addLog() {
+            const poolLogs = [
+                "Eth: Connection closed by the pool",
+                "Eth: Reconnecting in 5 seconds...",
+                "Eth: Connecting to ethash pool eu-etc.hiveon.net:8888",
+                "Eth: Connected to ethash pool eu-etc.hiveon.net:8888"
+            ];
+            
+            logs.push(poolLogs[Math.floor(Math.random() * poolLogs.length)]);
+            if (logs.length > 20) logs.shift(); // Remove linhas antigas para não travar
+            
+            consoleDiv.innerText = logs.join('\n');
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+
+        setInterval(addLog, 2000); // Adiciona uma nova linha a cada 2 segundos
+        addLog();
     </script>
 </body>
 </html>
+
